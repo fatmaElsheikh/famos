@@ -17,4 +17,53 @@ class postController extends Controller
         $title=$post->title;
         return view('posts.show', compact('post' , 'title'));
     }
+    public function create(){
+        $title='Add New Post';
+        return view('posts.create',compact('title'));
+    }
+    //show
+    public function store(Request $request){
+        $request->validate([
+            'title' => 'required|max:200',
+            'body'  =>  'required|max:500'
+        ]);
+        //insert data to DB
+        $post = new post();
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->user_id = auth()->user()->id;
+        $post->save();
+        return redirect('/posts')->with('status','Post was created');
+        }
+        //edit
+    
+    public function edit($id){
+        $title='Edit Post';
+        $post =post::find($id);
+        return view('posts.edit',compact('post', 'title'));
+    }
+        //update
+    public function update(Request $request ,$id){
+        $request->validate([
+            'title' => 'required|max:200',
+            'body'  =>  'required|max:500'
+        ]);
+        //insert data to DB
+        $post=post::find($id);
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->user_id = auth()->user()->id;
+        $post->save();
+        return redirect('/posts')->with('status','Post was updated');
+
+    }
+
+//DELETE
+public function destroy($id){
+    
+    $post =post::find($id);
+    $post->delete();
+    return redirect('/posts')->with('status', 'Post Was Deleted');
 }
+}
+

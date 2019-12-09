@@ -1,0 +1,31 @@
+body {
+    background: #fcfcfc;
+}
+
+// show page
+.single {
+    position: relative;
+    overflow: hidden;
+    .footer {
+        position: absolute;
+        top: 1rem;
+        right: -35%;
+        transition: 0.5s all;
+        .btn {
+            display: inline-block;
+            // width: 15%;
+        }
+    }
+}
+
+.single:hover .footer {
+    right: 2%;
+}
+
+// creat page
+.create {
+    width: 50%;
+    margin: 2rem auto;
+    background: #fff;
+    padding: 1rem;
+}
