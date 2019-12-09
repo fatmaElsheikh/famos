@@ -5,7 +5,7 @@
 
 <h1 class="text-center">{{$title}}</h1>
 <div class="create ">
-    <form method="POST" action="/posts">
+    <form method="POST" action="/posts" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="exampleFormControlInput1">Subject</label>

@@ -25,13 +25,23 @@ class postController extends Controller
     public function store(Request $request){
         $request->validate([
             'title' => 'required|max:200',
-            'body'  =>  'required|max:500'
+            'body'  =>  'required|max:500',
+            'image' => 'image|mimes:jpeg,png,bmp|max:1999'
         ]);
+        if($request->hasFile('coverImage')){
+            $file = $request->file('coverImage');
+            $ext = $file->getClientOriginalExtension();
+            $filename = 'cover_image_'. time() . '.' . $ext;
+            $path = $file->storeAs('public/coverImages' , $filename);
+        }else{
+            $filename = 'noimg.png';
+        }
         //insert data to DB
         $post = new post();
         $post->title = $request->title;
         $post->body = $request->body;
         $post->user_id = auth()->user()->id;
+        $post->image = $filename;
         $post->save();
         return redirect('/posts')->with('status','Post was created');
         }
@@ -46,13 +56,23 @@ class postController extends Controller
     public function update(Request $request ,$id){
         $request->validate([
             'title' => 'required|max:200',
-            'body'  =>  'required|max:500'
+            'body'  =>  'required|max:500',
+            'image' => 'image|mimes:jpeg,png,bmp|max:1999'
         ]);
+        if($request->hasFile('coverImage')){
+            $file = $request->file('coverImage');
+            $ext = $file->getClientOriginalExtension();
+            $filename = 'cover_image_'. time() . '.' . $ext;
+            $path = $file->storeAs('public/coverImages' , $filename);
+        }else{
+            $filename = 'noimg.png';
+        }
         //insert data to DB
         $post=post::find($id);
         $post->title = $request->title;
         $post->body = $request->body;
         $post->user_id = auth()->user()->id;
+        $post->image = $filename;
         $post->save();
         return redirect('/posts')->with('status','Post was updated');
 

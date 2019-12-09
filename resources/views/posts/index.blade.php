@@ -10,10 +10,12 @@
       <div class="row">
           <div class="col-md-9">
               @foreach ($posts as $post)
-                <div class="card mt-3">
+                <div class="card mt-3 text-center">
+                  
                   <div class="card-header">
                     {{$post->title}}
                   </div>
+                  <img src="{{asset('storage/coverImages/'.$post->image)}}" class="card-img-top" alt="..." height="400">
                   <div class="card-body text-center">
                     <h5 class="card-title">Special title treatment</h5>
                     <p class="card-text">{{$post->body}}</p>
